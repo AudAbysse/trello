@@ -5,5 +5,21 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: "test"
-        run: echo "Déployer mon projet"
+      - name: clone
+        run: echo "clone"
+
+      - name: build
+        run: echo "build"
+
+      - name: Dockerize
+        run: echo "Dockerize"
+
+      - name: Push to docker hub
+        run: echo "Push to docker hub"
+
+      - name: Connect to server
+        run: echo "Connect to server"
+        
+      - name: Run container
+        run: echo "Run container"
+
