@@ -29,16 +29,16 @@ jobs:
         with:
           context: .
           push: true
-          tags: audeabysse/trello:latest
+          tags: audeabysse/trello:${{ github.sha }}
 
-      - name: build
-        run: echo "BUILD"
-
-      - name: Dockerize
-        run: echo "Dockerize"
-
-      - name: Push to docker hub
-        run: echo "Push to docker hub"
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.JENKINS_HOST }}
+          username: ${{ secrets.JENKINS_USERNAME }}
+          key: ${{ secrets.JENKINS_TOKEN }}
+          script: |
+            docker run --name trello -p 3001:80 -d audeabysse/trello:${{ github.sha }}
 
       - name: Connect to server
         run: echo "Connect to server"
