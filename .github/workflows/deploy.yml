@@ -4,12 +4,34 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps:
-      - name: clone
-        run: echo "clone"
+    steps:             
+      - name: Clone repository
+        uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - run: npm ci
+      - run: ls -al
+      
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: audeabysse/trello:${{ env.GITHUB_SHA }}
 
       - name: build
-        run: echo "build"
+        run: echo "BUILD"
 
       - name: Dockerize
         run: echo "Dockerize"
@@ -19,7 +41,7 @@ jobs:
 
       - name: Connect to server
         run: echo "Connect to server"
-        
+
       - name: Run container
         run: echo "Run container"
 
