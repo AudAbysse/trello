@@ -1,0 +1,9 @@
+on:
+  push:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "test"
+        run: echo "Déployer mon projet"
